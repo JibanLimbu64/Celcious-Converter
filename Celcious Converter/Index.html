@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font import for a modern look */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a202c;
+            /* Dark background */
+            color: #e2e8f0;
+            /* Light text color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+    <div class="bg-gray-800 p-8 rounded-xl shadow-2xl w-full max-w-md mx-4 border border-gray-700">
+        <h1 class="text-3xl font-bold text-center mb-6 text-white">Temperature Converter</h1>
+
+        <div class="mb-6">
+            <label for="celsiusInput" class="block text-gray-300 text-sm font-semibold mb-2">
+                Enter Celsius (°C)
+            </label>
+            <input type="number" id="celsiusInput" placeholder="e.g., 25"
+                class="shadow-sm appearance-none border border-gray-600 rounded-lg w-full py-3 px-4 bg-gray-700 text-white leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out">
+        </div>
+
+        <button id="convertButton"
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg focus:outline-none focus:shadow-outline transition duration-300 ease-in-out transform hover:scale-105 shadow-lg">
+            Convert to Fahrenheit
+        </button>
+
+        <div class="mt-8 text-center">
+            <p class="text-gray-300 text-lg font-medium mb-2">Result in Fahrenheit:</p>
+            <p id="fahrenheitResult"
+                class="text-4xl font-extrabold text-white bg-gray-700 py-4 px-6 rounded-lg inline-block min-w-[150px] transition-colors duration-300 ease-in-out">
+                --°F
+            </p>
+            <h4>Develop By Jiban Limbu</h4>
+        </div>
+    </div>
+
+    <script>
+        // Get references to the input field, button, and result display
+        const celsiusInput = document.getElementById('celsiusInput');
+        const convertButton = document.getElementById('convertButton');
+        const fahrenheitResult = document.getElementById('fahrenheitResult');
+
+        /**
+         * Converts Celsius to Fahrenheit.
+         * Formula: F = C * 9/5 + 32
+         * @param {number} celsius - Temperature in Celsius.
+         * @returns {number} Temperature in Fahrenheit.
+         */
+        function convertCelsiusToFahrenheit(celsius) {
+            return (celsius * 9 / 5) + 32;
+        }
+
+        /**
+         * Handles the conversion process when the button is clicked or Enter is pressed.
+         * Reads Celsius input, performs conversion, and updates the display.
+         */
+        function handleConversion() {
+            const celsiusValue = parseFloat(celsiusInput.value);
+
+            // Check if the input is a valid number
+            if (isNaN(celsiusValue)) {
+                // Display error if input is not a valid number
+                fahrenheitResult.textContent = 'Invalid Input';
+                fahrenheitResult.style.color = '#ff4d4d'; // Red for error
+                fahrenheitResult.style.backgroundColor = '#4a0e0e'; // Dark red background for error
+            } else {
+                // Perform the conversion
+                const fahrenheitValue = convertCelsiusToFahrenheit(celsiusValue);
+                // Format to two decimal places for readability and update the display
+                fahrenheitResult.textContent = `${fahrenheitValue.toFixed(2)}°F`;
+                fahrenheitResult.style.color = '#ffffff'; // Reset color
+                fahrenheitResult.style.backgroundColor = '#4a5568'; // Reset background color
+            }
+        }
+
+        // Add event listener to the convert button for click events
+        convertButton.addEventListener('click', handleConversion);
+
+        // Allow conversion on Enter key press in the input field
+        celsiusInput.addEventListener('keypress', (event) => {
+            // Check if the pressed key is 'Enter' (key code 13)
+            if (event.key === 'Enter') {
+                handleConversion(); // Trigger the conversion
+            }
+        });
+    </script>
+</body>
+
+</html>
